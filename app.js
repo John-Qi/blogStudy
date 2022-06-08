@@ -38,6 +38,16 @@ const serverHandle = (req, res) => {
         req.query = querystring.parse(url.split('?')[1])
         // 设置返回格式
         res.setHeader('Content-type', 'application/json')
+        req.cookie={}
+        const cookieStr =req.headers.cookie||''
+        cookieStr.split(';').forEach(item => {
+            if(!item)return
+            const arr=item.split('=')
+            const key=arr[0]
+            const value=arr[1]
+            req.cookie[key]=value
+        });
+        console.log(req.cookie);
         // 处理blog路由
         const blogResult=handleBlogRouter(req,res);
         if (blogResult) {

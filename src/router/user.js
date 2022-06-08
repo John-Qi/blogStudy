@@ -1,4 +1,4 @@
-const {loginCheck} =require('../controller/user')
+const {login} =require('../controller/user')
 const {SuccessModel,ErrorModel}=require('../model/resModel')
 const handleUserRouter =(req,res) =>{
     const method=req.method
@@ -7,13 +7,13 @@ const handleUserRouter =(req,res) =>{
             username,
             password
         } = req.body
-        const result = loginCheck(username, password)
+        const result = login(username, password)
         return result.then(data => {
             if (data.username) {
                     return new SuccessModel('登录成功')
-            }else {
-                return new ErrorModel('密码或用户名错误')
             }
+            return new ErrorModel('密码或用户名错误')
+            
         })
 
     }
